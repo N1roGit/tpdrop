@@ -1,0 +1,29 @@
+filesys/open_file.cc:    syncmap->Mark(sectr,0 , 0);
+filesys/open_file.cc:    syncmap->Clear(sectr,0,0); //se saca de la lista de threads con el file abierto
+filesys/open_file.cc:    syncmap->FileCheck(sectr)->lock->Acquire();
+filesys/open_file.cc:    filedata* data = syncmap->FileCheck(sectr); //tira segfault aca, agregar el addd 0 0 al constructor
+filesys/open_file.cc:    while(syncmap->FileCheck(sectr)->writers != 0){
+filesys/open_file.cc:        syncmap->FileCheck(sectr)->write->Wait(); //espera a que no escriba nadie
+filesys/open_file.cc:    syncmap->Mark(sectr,1 , 0);
+filesys/open_file.cc:    syncmap->Mark(sectr,-1 , 0);
+filesys/open_file.cc:    syncmap->FileCheck(sectr)->read->Signal(); //avisa que termino de leer
+filesys/open_file.cc:    syncmap->FileCheck(sectr)->lock->Release();
+filesys/open_file.cc:    DEBUG('D', "%s Entro en write, cursor en %d y %d escritories.\n",currentThread->GetName(),seekPosition ,syncmap->FileCheck(sectr)->writers);
+filesys/open_file.cc:    syncmap->FileCheck(sectr)->lock->Acquire();
+filesys/open_file.cc:    filedata* data = syncmap->FileCheck(sectr); //tira segfault aca, agregar el addd 0 0 al constructor
+filesys/open_file.cc:    while(syncmap->FileCheck(sectr)->writers != 0 ){
+filesys/open_file.cc:        syncmap->FileCheck(sectr)->write->Wait();
+filesys/open_file.cc:    syncmap->Mark(sectr,0 , 1);
+filesys/open_file.cc:    syncmap->Mark(sectr,0 , -1);
+filesys/open_file.cc:    syncmap->FileCheck(sectr)->write->Signal();
+filesys/open_file.cc:    syncmap->FileCheck(sectr)->lock->Release();
+filesys/open_file.cc:    DEBUG('D', "%s Salio de write, escritores:  %d.\n",currentThread->GetName(),syncmap->FileCheck(sectr)->writers);
+filesys/fs_test.cc:        //syncmap->PrintAll();
+filesys/fs_test.cc:        //syncmap->PrintAll();
+filesys/fs_test.cc:        //syncmap->PrintAll();
+filesys/file_system.cc:    DEBUG('f'," %d \n",syncmap->FileCheck(sector)==nullptr);
+filesys/file_system.cc:    if (sector >= 0 && ((syncmap->FileCheck(sector)!=nullptr  &&  (!syncmap->FileCheck(sector)->deleted)) ||  syncmap->FileCheck(sector)==nullptr )){
+filesys/file_system.cc:    syncmap->MarkDelete(sector);
+filesys/file_system.cc:    //DEBUG('f', "------------  %i  ----------.\n",syncmap->FileCheck(sector)->uthreads->IsEmpty());
+filesys/file_system.cc:    if(((syncmap->FileCheck(sector)!=nullptr && (syncmap->FileCheck(sector)->uthreads->IsEmpty())) ||  syncmap->FileCheck(sector)==nullptr)){
+filesys/file_system.cc:    if(((syncmap->FileCheck(sector)!=nullptr && (syncmap->FileCheck(sector)->uthreads->IsEmpty()) && syncmap->FileCheck(sector)->deleted) ||  syncmap->FileCheck(sector)==nullptr)){
